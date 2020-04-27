@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "react-app",
+    "@rally/eslint-config",
+    "prettier",
+    "prettier/react"
+  ],
+  "ignorePatterns": ["node_modules/", "*.config.js"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"]
+}
