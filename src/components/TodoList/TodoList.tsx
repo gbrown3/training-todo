@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { TodoListState } from './TodoList.interface';
+import { TodoItem } from '../TodoItem/TodoItem';
 
-class TodoList extends React.Component {
-  constructor(props) {
+export default class TodoList extends React.Component<{}, TodoListState> {
+  constructor(props: Readonly<{}>) {
     super(props);
-    this.state = { todos: [] };
+    this.state = { todos: [{isDone: true, label: 'first todo!'}] };
   }
 
   render() {
@@ -14,6 +16,6 @@ class TodoList extends React.Component {
           return <TodoItem todo={todo} />;
         })}
       </div>
-    )
+    );
   }
 }
