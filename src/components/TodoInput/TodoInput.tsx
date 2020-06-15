@@ -17,9 +17,9 @@ export class TodoInput extends React.Component<{onSubmit: (e:FormEvent) => void 
     return (
       <div>
         <form onSubmit={this.props.onSubmit}>
-          <input onChange={this.onChangeHandler}></input>
-          <button>Add Todo</button>
-        </form>
+          <input type="text" name="todo-title" onChange={this.onChangeHandler} value={this.state.newTodo} />
+          <button type="submit">Add Todo</button>
+        </form> 
       </div>
     );
   }

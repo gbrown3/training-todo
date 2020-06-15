@@ -1,19 +1,15 @@
-import React from 'react';
-import { TodoListState } from './TodoList.interface';
+import React, { ChangeEvent } from 'react';
 import { TodoItem } from '../TodoItem/TodoItem';
+import { Todos } from '../TodoContainer/TodoContainer';
 
-export default class TodoList extends React.Component<{}, TodoListState> {
-  constructor(props: Readonly<{}>) {
-    super(props);
-    this.state = { todos: [{isDone: true, label: 'first todo!'}] };
-  }
-
+export default class TodoList extends React.Component<{todoList: Todos[], onCheckChangeHandler: (e: ChangeEvent<HTMLInputElement>, index: number) => void}> {
+  
   render() {
-    const { todos } = this.state;
+    const { todoList, onCheckChangeHandler } = this.props;
     return (
       <div>
-        {todos.map(todo => {
-          return <TodoItem todo={todo} />;
+        {todoList.map((todo, index) => {
+          return <TodoItem todo={todo} index={index} key={`${todo.label}-${index}`} onCheckChangeHandler={onCheckChangeHandler}/>;
         })}
       </div>
     );
