@@ -1,4 +1,5 @@
-import React, { FormEvent, ChangeEvent } from 'react';
+/* eslint-disable no-console */
+import React, { FormEvent, ChangeEvent, MouseEvent } from 'react';
 import TodoList from '../TodoList/TodoList';
 import { TodoInput } from '../TodoInput/TodoInput';
 
@@ -14,6 +15,7 @@ export class TodoContainer extends React.Component<{}, {todos: Todos[]}> {
     this.state = { todos: [] };
     this.onSubmit = this.onSubmit.bind(this);
     this.onCheckChangeHandler = this.onCheckChangeHandler.bind(this);
+    this.onRemoveClickHandler = this.onRemoveClickHandler.bind(this);
   }
 
   onSubmit(e: FormEvent) {
@@ -26,17 +28,41 @@ export class TodoContainer extends React.Component<{}, {todos: Todos[]}> {
   }
 
   onCheckChangeHandler(e: ChangeEvent<HTMLInputElement>, todoIndex: number) {
-    //this.setState({ newTodo: e.target.value });
-    //this.state.todos[todoIndex]
-    // eslint-disable-next-line no-console
-    console.log(e);
+    const newTodos = [ ...this.state.todos ];
+    const {label, isDone} = newTodos[todoIndex];
+
+    newTodos[todoIndex] = {
+      label,
+      isDone: !isDone
+    };
+    this.setState({
+      todos: newTodos
+    });
+  }
+
+  onRemoveClickHandler(e: MouseEvent, todoIndex: number) {
+    const newTodos = [ ...this.state.todos ];
+    newTodos.splice(todoIndex, 1);
+
+    console.log("Index to remove: ", todoIndex);
+    console.log("Old todos: ", [ ...this.state.todos ]);
+    console.log("New todos after removal: ", newTodos);
+
+
+    this.setState({
+      todos: newTodos
+    });
   }
 
   render() {
     return (
       <div>
-        <TodoList todoList={this.state.todos} onCheckChangeHandler={this.onCheckChangeHandler}></TodoList>
         <TodoInput onSubmit={this.onSubmit}></TodoInput>
+        <TodoList
+          todoList={this.state.todos}
+          onRemoveClickHandler={this.onRemoveClickHandler}
+          onCheckChangeHandler={this.onCheckChangeHandler}
+        ></TodoList>
       </div>
     );
   }
