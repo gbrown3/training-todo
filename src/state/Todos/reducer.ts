@@ -1,4 +1,4 @@
-import { AddTodoAction } from './types';
+import { TodoActionTypes, TodosActionType } from './types';
 
 // TODO: move to types file
 export interface Todo {
@@ -14,32 +14,29 @@ export interface TodosState {
 export const initialState: TodosState = { todos: [] };
 
 // In real app: set up action types, then set up an overarching action type for this specific reducer
-export default function todosReducer(state = initialState, action: AddTodoAction) {
+export default function todosReducer(state = initialState, action: TodoActionTypes) {
   switch(action.type) {
-    case 'ADD_TODO':
-      // Payload = Todo
+    case TodosActionType.ADD_TODO:
       return {
         ...state,
         todos: [ ...state.todos, action.payload ]
       };
-    case 'REMOVE_TODO': {
-      // Payload = index of todo to remove
+    case TodosActionType.REMOVE_TODO: {
       const newTodos = {
         ...state,
         todos: [...state.todos]
       };      
-      newTodos.todos.splice(action.payload, 1);
+      newTodos.todos.splice(action.payload.index, 1);
 
       return newTodos;
     }
-    case 'TOGGLE_TODO': {
-      // Payload = index of todo to remove
+    case TodosActionType.TOGGLE_TODO: {
       const newTodos = {
         ...state,
         todos: [...state.todos]
       };      
-      const oldIsDone = newTodos.todos[action.payload].isDone;
-      newTodos.todos[action.payload].isDone = !oldIsDone;
+      const oldIsDone = newTodos.todos[action.payload.index].isDone;
+      newTodos.todos[action.payload.index].isDone = !oldIsDone;
 
       return newTodos;
     }

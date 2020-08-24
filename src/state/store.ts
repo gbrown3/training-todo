@@ -1,14 +1,17 @@
 import { createStore } from "redux";
 import { rootReducer } from "./rootReducer";
-import { initialState as initialTodosState } from "./Todos/reducer";
+import { initialState as initialTodosState , TodosState} from "./Todos/reducer";
 
-const initialStoreState = {
-  todos: initialTodosState
+export interface StoreState {
+  todoList: TodosState;
+}
+
+const initialStoreState: StoreState = {
+  todoList: initialTodosState
 };
 
 
 export default function configureStore(preloadedState = initialStoreState) {
-  // TODO: set up root reducer
   const store = createStore(rootReducer, preloadedState);
   return store;
 }
